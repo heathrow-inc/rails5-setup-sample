@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+  app: &app
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    working_dir: /app
+    volumes:
+      - .:/app
+      - data-bundle:/bundle
+    links:
+      - mysql
+      - redis
+    environment:
+      DATABASE_URL: mysql2://root@mysql:3306
+      REDIS_URL: redis://redis:6379
+      BUNDLE_PATH: /bundle
+
+  web:
+    <<: *app
+    command: ./bin/rails s -p 80 -b '0.0.0.0'
+    ports:
+      - 80:80
+
+  worker:
+    <<: *app
+    command: ./bin/sidekiq
+
+  mysql:
+    image: heathrow/mysql:5.6
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_general_ci
+      MYSQL_INNODB_LARGE_PREFIX: 1
+
+  redis:
+    image: heathrow/redis:2.8
+    ports:
+      - 6379:6379
+
+volumes:
+  data-bundle:
+    driver: local

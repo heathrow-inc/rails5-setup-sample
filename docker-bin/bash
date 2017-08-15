@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd `dirname $0`
+./compose run --rm -e HISTFILE=./tmp/bash_history ${1:-app} bash

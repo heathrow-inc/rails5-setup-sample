@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cd `dirname $0`
+
+echo "\n=> docker-compose build"
+./compose build
+
+echo "\n=> bundle install"
+./compose run --rm -e DISABLE_SPRING=1 app ./bin/setup
