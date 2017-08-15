@@ -1,0 +1,63 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  TargetRubyVersion: 2.4
+  Include:
+    - '**/Gemfile'
+    - '**/Rakefile'
+  Exclude:
+    - 'bin/*'
+    - 'db/schema.rb'
+    - 'vendor/**/*'
+
+Rails:
+  Enabled: true
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyMethod:
+   EnforcedStyle: expanded
+
+Style/FileName:
+  Exclude:
+    - 'Capfile'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/SafeNavigation:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 20
+  Exclude:
+    - '**/db/migrate/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'config/deploy/*'
+    - 'config/routes.rb'
+    - 'config/sitemap.rb'
+    - 'db/fixtures/*'
+    - 'db/migrate/*'
+    - 'lib/**/*.rake'
+    - 'spec/**/*'
+
+Metrics/ClassLength:
+  Exclude:
+    - '**/db/migrate/*'
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 15
+  Exclude:
+    - '**/db/migrate/*'
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
